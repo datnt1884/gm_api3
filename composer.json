@@ -1,5 +1,5 @@
 {
-    "name": "maurobonfietti/rest-api-slim-php",
+    "name": "datnt1884/gm_api3",
     "description": "Example of REST API with Slim PHP Framework.",
     "keywords": [
         "php",
@@ -11,7 +11,7 @@
         "rest",
         "api"
     ],
-    "homepage": "https://github.com/datnt1884/gm_api2",
+    "homepage": "https://github.com/datnt1884/gm_api3",
     "license": "MIT",
     "authors": [
         {
