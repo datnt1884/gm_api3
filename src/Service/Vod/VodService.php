@@ -18,6 +18,11 @@ final class VodService extends Base
         return $this->getVodRepository()->getAll($userId);
     }
 
+    public function getbyCat($vod): array
+    {
+        return $this->getVodRepository()->getbyCat($vod);
+    }
+
     public function getOne(int $VodId, int $userId)
     {
         if (self::isRedisEnabled() === true) {
