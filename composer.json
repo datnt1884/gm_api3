@@ -1,0 +1,58 @@
+{
+    "name": "maurobonfietti/rest-api-slim-php",
+    "description": "Example of REST API with Slim PHP Framework.",
+    "keywords": [
+        "php",
+        "slim-micro-framework",
+        "rest-api",
+        "mysql",
+        "slim3",
+        "slim",
+        "rest",
+        "api"
+    ],
+    "homepage": "https://github.com/datnt1884/gm_api2",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "laoxdat",
+            "email": "laoxdat@gmail.com",
+            "homepage": "https://github.com/datnt1884"
+        }
+    ],
+    "require": {
+        "firebase/php-jwt": "^5.0",
+        "palanik/corsslim": "dev-slim3",
+        "predis/predis": "^1.1",
+        "respect/validation": "^1.1",
+        "slim/slim": "^3.12.2",
+        "vlucas/phpdotenv": "^2.4"
+    },
+    "require-dev": {
+        "nunomaduro/phpinsights": "^1.14",
+        "phpstan/phpstan": "^0.12",
+        "phpunit/phpunit": "^9.0"
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/",
+            "Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "post-create-project-cmd": [
+            "php -r \"copy('.env.example', '.env');\"",
+            "\\App\\Controller\\DefaultController::postCreateProjectCommand"
+        ],
+        "coverage": "phpunit --coverage-html=coverage --coverage-text",
+        "database": "php extras/bin/restart-db.php",
+        "phpstan": "./vendor/bin/phpstan analyse src tests --level=6",
+        "restart": "php extras/bin/restart-db.php",
+        "restart-db": "php extras/bin/restart-db.php",
+        "start": "php -S 0.0.0.0:8080 -t public public/index.php",
+        "test": "phpunit"
+    }
+}
