@@ -23,10 +23,7 @@ final class ChannelService extends Base
     {
         return $this->getChannelRepository()->getCatChannels($userId,$genreId);
     }
-    public function getDeviceid(int $userId): array
-    {
-        return $this->getChannelRepository()->getDeviceid($userId);
-    }
+
 
 
 

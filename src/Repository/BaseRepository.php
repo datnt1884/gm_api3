@@ -13,7 +13,7 @@ abstract class BaseRepository
     {
         return $this->database;
     }
-    public function getDeviceid(int $userId): array
+    public function getDeviceId(int $userId): array
     {
         $query = "SELECT t2.`login_data_id`, t2.`device_id`, t1.`customer_id` 
                   FROM `login_data` t1 

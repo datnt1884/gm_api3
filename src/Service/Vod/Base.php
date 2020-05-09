@@ -28,7 +28,10 @@ abstract class Base extends BaseService
     {
         return $this->VodRepository;
     }
-
+    public function getDeviceid(int $userId): array
+    {
+        return $this->getVodRepository()->getDeviceid($userId);
+    }
     protected static function validateVodName(string $name): string
     {
         if (! v::length(2, 100)->validate($name)) {

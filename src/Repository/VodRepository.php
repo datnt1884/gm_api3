@@ -37,11 +37,27 @@ final class VodRepository extends BaseRepository
         return $statement->fetchAll();
     }
 
-    public function getAll(int $userId): array
+    public function getAll(int $category_id): array
     {
-        $query = 'SELECT * FROM `Vods` WHERE `userId` = :userId ORDER BY `id`';
+        $query = " SELECT `vod`.`id`, `vod`.`vote_count`, `vod`.`vote_average`, `vod`.`title`, `vod`.`popularity`, 
+                          \"film\" AS `vod_type`, `vod`.`trailer_url`, `vod`.`price`, `vod`.`expiration_time`,
+                           concat('https://gm.tv1asia.com', `image_url`) AS `backdrop_path`, 
+                           concat('https://gm.tv1asia.com', `vod`.`icon_url`) AS `poster_path`, `vod`.`original_language`, `vod`.`original_title`,
+                            `vod`.`adult_content` AS `adult`, `vod`.`description` AS `overview`, DATE_FORMAT(`release_date`, '%Y-%m-%d') AS `release_date`, 
+                            `t_vod_sales`.`id` AS `t_vod_sales.id`, `package_vods`.`id` AS `package_vods.id` 
+                            FROM `vod` AS `vod` 
+                            INNER JOIN `vod_vod_categories` AS `vod_vod_categories` 
+                            ON `vod`.`id` = `vod_vod_categories`.`vod_id` AND `vod_vod_categories`.`category_id` = :category_id 
+                            INNER JOIN `vod_category` AS `vod_vod_categories.vod_category` 
+                            ON `vod_vod_categories`.`category_id` = `vod_vod_categories.vod_category`.`id` AND `vod_vod_categories.vod_category`.`password` = false 
+                            LEFT OUTER JOIN `t_vod_sales` AS `t_vod_sales` 
+                            ON `vod`.`id` = `t_vod_sales`.`vod_id` AND `t_vod_sales`.`end_time` >= '2020-04-15 08:14:38' 
+                            LEFT OUTER JOIN `package_vod` AS `package_vods` 
+                            ON `vod`.`id` = `package_vods`.`vod_id` AND `package_vods`.`package_id` IN (4) 
+                            WHERE `vod`.`isavailable` = true AND `vod`.`company_id` = 1 AND `vod`.`expiration_time` >= '2020-04-15 08:14:38' AND `vod`.`pin_protected` = false AND `vod`.`adult_content` = false 
+                            ORDER BY `vod`.`id`";
         $statement = $this->getDb()->prepare($query);
-        $statement->bindParam('userId', $userId);
+        $statement->bindParam('category_id', $category_id);
         $statement->execute();
 
         return $statement->fetchAll();

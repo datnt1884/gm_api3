@@ -28,7 +28,10 @@ abstract class Base extends BaseService
     {
         return $this->SerialRepository;
     }
-
+    public function getDeviceid(int $userId): array
+    {
+        return $this->getSerialRepository()->getDeviceid($userId);
+    }
     protected static function validateSerialName(string $name): string
     {
         if (! v::length(2, 100)->validate($name)) {

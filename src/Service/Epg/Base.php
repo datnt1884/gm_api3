@@ -28,7 +28,10 @@ abstract class Base extends BaseService
     {
         return $this->EpgRepository;
     }
-
+    public function getDeviceid(int $userId): array
+    {
+        return $this->getEpgRepository()->getDeviceid($userId);
+    }
     protected static function validateEpgName(string $name): string
     {
         if (! v::length(2, 100)->validate($name)) {
