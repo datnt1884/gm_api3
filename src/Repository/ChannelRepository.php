@@ -91,8 +91,37 @@ class ChannelRepository extends BaseRepository
         $statement = $this->getDb()->prepare($query);
          $userId ="120";
         echo $userId;
-        $statement->bindParam('user_id', intval($userId,10), \PDO::PARAM_INT);
-        $statement->bindParam('login_id', intval($userId,10), \PDO::PARAM_INT);
+        $statement->bindParam('user_id', $userId,\PDO::PARAM_INT);
+        $statement->bindParam('login_id', $userId, \PDO::PARAM_INT);
+
+        $statement->execute();
+
+        $Channel = $statement->fetchAll();
+        if (empty($Channel)) {
+            throw new Channel('Channel not found----.', 404);
+        }
+        return $Channel;
+
+    }
+
+    public function getCatchup(int $userId): array
+    {
+        $query =" SELECT `channels`.`id`, `channels`.`genre_id`, `channels`.`channel_number`, `channels`.`title`, `channels`.`icon_url`, `channels`.`pin_protected`, `channel_streams`.`stream_source_id` AS `channel_streams.stream_source_id`, `channel_streams`.`stream_url` AS `channel_streams.stream_url`, `channel_streams`.`stream_format` AS `channel_streams.stream_format`, `channel_streams`.`token` AS `channel_streams.token`, `channel_streams`.`token_url` AS `channel_streams.token_url`, `channel_streams`.`is_octoshape` AS `channel_streams.is_octoshape`, `channel_streams`.`drm_platform` AS `channel_streams.drm_platform`, `channel_streams`.`encryption` AS `channel_streams.encryption`, `channel_streams`.`encryption_url` AS `channel_streams.encryption_url`, `favorite_channels`.`id` AS `favorite_channels.id` 
+                  FROM `channels` AS `channels` 
+                  INNER JOIN `channel_stream` AS `channel_streams` 
+                  ON `channels`.`id` = `channel_streams`.`channel_id` AND `channel_streams`.`stream_source_id` = 1 AND `channel_streams`.`stream_mode` = 'catchup' AND `channel_streams`.`stream_resolution` LIKE '%2%' 
+                  INNER JOIN `genre` AS `genre` ON `channels`.`genre_id` = `genre`.`id` AND `genre`.`is_available` = true 
+                  INNER JOIN `packages_channels` AS `packages_channels` ON `channels`.`id` = `packages_channels`.`channel_id` 
+                  INNER JOIN `package` AS `packages_channels.package` ON `packages_channels`.`package_id` = `packages_channels.package`.`id` AND `packages_channels.package`.`package_type_id` = 2 
+                  INNER JOIN `subscription` AS `packages_channels.package.subscriptions` ON `packages_channels.package`.`id` = `packages_channels.package.subscriptions`.`package_id` AND `packages_channels.package.subscriptions`.`login_id` = :login_id  
+                  LEFT OUTER JOIN `favorite_channels` AS `favorite_channels` ON `channels`.`id` = `favorite_channels`.`channel_id` AND `favorite_channels`.`user_id` = :user_id 
+                  WHERE `channels`.`isavailable` = 1 AND `channels`.`pin_protected` = 0 AND `channels`.`company_id` = 1 
+                  GROUP BY `id` ORDER BY `channels`.`channel_number` ASC";
+        $statement = $this->getDb()->prepare($query);
+        $userId ="120";
+        echo $userId;
+        $statement->bindParam('user_id', $userId,\PDO::PARAM_INT);
+        $statement->bindParam('login_id', $userId, \PDO::PARAM_INT);
 
         $statement->execute();
 

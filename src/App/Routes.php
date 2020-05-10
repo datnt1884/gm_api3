@@ -33,8 +33,8 @@ $app->group('/api/v1', function () use ($app): void {
 
     /***Vod****/
     $app->group('/vod', function () use ($app): void {
-        $app->get('', \App\Controller\Vod\GetAll::class);
-        $app->get('/[{id}]', \App\Controller\Vod\GetOne::class);
+        $app->get('[/{category_id}[/{page}]]', \App\Controller\Vod\GetAll::class);
+       // $app->get('/[{id}]', \App\Controller\Vod\GetOne::class);
         $app->get('/search/[{query}]', \App\Controller\Vod\Search::class);
         $app->post('', \App\Controller\Vod\Create::class);
         $app->put('/[{id}]', \App\Controller\Vod\Update::class);

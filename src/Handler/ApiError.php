@@ -24,15 +24,26 @@ final class ApiError extends \Slim\Handlers\Error
         $className = new \ReflectionClass(get_class($exception));
         $data = [
             'message' => $exception->getMessage(),
-            'class' => $className->getName(),
-            'status' => 'error',
-            'code' => $statusCode,
+            'class' => $className->getName()
+          //  'status' => 'error',
+            //'code' => $statusCode,
         ];
-        $body = json_encode($data, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT);
+      //  $body = json_encode($data, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT);
 
-        return $response
-            ->withStatus($statusCode)
-            ->withHeader('Content-type', 'application/problem+json')
-            ->write($body);
+        //return $response
+          //  ->withStatus($statusCode)
+            //->withHeader('Content-type', 'application/problem+json')
+            //->write($body);
+        return $this->jsonResponse($response, 'error', $data, $statusCode);
+    }
+    protected function jsonResponse(Response $response, string $status, $message, int $code): Response
+    {
+        $result = [
+            'code' => $code,
+            'status' => $status,
+            'data' => $message,
+        ];
+
+        return $response->withJson($result, $code, JSON_PRETTY_PRINT);
     }
 }

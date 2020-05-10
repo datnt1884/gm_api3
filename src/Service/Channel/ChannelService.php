@@ -19,6 +19,10 @@ final class ChannelService extends Base
     {
         return $this->getChannelRepository()->getAll($userId);
     }
+    public function getCatchup(int $userId): array
+    {
+        return $this->getChannelRepository()->getCatchup($userId);
+    }
     public function getCatChannels(int $userId, int $genreId): array
     {
         return $this->getChannelRepository()->getCatChannels($userId,$genreId);

@@ -27,7 +27,10 @@ final class EpgRepository extends BaseRepository
 
         return $Epg;
     }
-
+    public function getTimeZone()
+    {
+        $query = 'SELECT `timezone` FROM `epg_data` ORDER BY `id`';
+    }
     public function getAllEpgs(): array
     {
         $query = 'SELECT * FROM `Epgs` ORDER BY `id`';
@@ -60,14 +63,14 @@ final class EpgRepository extends BaseRepository
         $statement = $this->database->prepare($query);
         $y = date('Y')."-".$input['date'];
         $date_now =  date("Y-m-d H:i:s");
-        $timezone = $input['timezone'];
+        //$timezone = $input['timezone'];
         $timezone = 7;
         $date_s = $y." 00:00:00";
         $date_s = date('Y-m-d H:i:s',strtotime($date_s."-".$timezone." hours"));
         $date_e = $y." 23:59:00";
         $date_e = date('Y-m-d H:i:s',strtotime($date_e."-".$timezone." hours"));
         //$date_e = "2020-05-1 23:59:00";
-        $statement->bindParam('channel_id', intval($input['channel_id'],10), \PDO::PARAM_INT);
+        $statement->bindParam('channel_id', $input['channel_id'], \PDO::PARAM_INT);
         $statement->bindParam('date_s', $date_s,\PDO::PARAM_STR,255);
         $statement->bindParam('date_e', $date_e,\PDO::PARAM_STR,255);
         $statement->bindParam('date_now', $date_now,\PDO::PARAM_STR,255);
@@ -93,14 +96,14 @@ final class EpgRepository extends BaseRepository
         $date_now =  date("Y-m-d H:i:s");
        // $date_now = '2020-04-03';
        // echo $date_now;
-        $timezone = $input['timezone'];
+       // $timezone = $input['timezone'];
         $timezone = 7;
         $date_s = $y." 00:00:00";
         $date_s = date('Y-m-d H:i:s',strtotime($date_s."-".$timezone." hours"));
         $date_e = $y." 23:59:00";
         $date_e = date('Y-m-d H:i:s',strtotime($date_e."-".$timezone." hours"));
         //$date_e = "2020-05-1 23:59:00";
-        $statement->bindParam('channel_id', intval($input['channel_id'],10), \PDO::PARAM_INT);
+        $statement->bindParam('channel_id', $input['channel_id'], \PDO::PARAM_INT);
         $statement->bindParam('date_s', $date_s,\PDO::PARAM_STR,255);
         $statement->bindParam('date_e', $date_e,\PDO::PARAM_STR,255);
         $statement->bindParam('date_now', $date_now,\PDO::PARAM_STR,255);
