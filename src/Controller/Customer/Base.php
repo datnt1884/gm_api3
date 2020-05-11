@@ -7,6 +7,8 @@ namespace App\Controller\Customer;
 use App\Controller\BaseController;
 use App\Exception\Customer;
 use App\Service\Customer\CustomerService;
+use App\Service\LoginData\LoginDataService;
+
 use Slim\Container;
 
 abstract class Base extends BaseController
@@ -20,6 +22,12 @@ abstract class Base extends BaseController
     {
         return $this->container->get('customer_service');
     }
+    protected function getLoginDataService(): LoginDataService
+    {
+        return $this->container->get('loginData_service');
+    }
+
+
 
     protected function checkCustomerPermissions(int $CustomerId, int $CustomerIdLogged): void
     {

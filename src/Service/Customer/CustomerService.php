@@ -33,15 +33,19 @@ final class CustomerService extends Base
     public function create($input)
     {
         $data = json_decode(json_encode($input), false);
-        if (! isset($data->name)) {
-            throw new Customer('The field "name" is required.', 400);
+        //if (! isset($data->name)) {
+        //    throw new User('The field "name" is required.', 400);
+        //}
+        if (! isset($data->email)) {
+            throw new Customer('The field "email" is required.', 400);
         }
-
-        if (! isset($data->password)) {
-            throw new Customer('The field "password" is required.', 400);
-        }
-        $data->name = self::validateCustomerName($data->name);
-        $data->password = hash('sha512', $data->password);
+       // if (! isset($data->password)) {
+        ////    throw new User('The field "password" is required.', 400);
+       // }
+        //$data->name = self::validateUserName($data->name);
+        $data->email = self::validateEmail($data->email);
+        //$data->password = hash('sha512', $data->password);
+        $this->CustomerRepository->checkCustomerByEmail($data->email);
         $Customer = $this->CustomerRepository->create($data);
         if (self::isRedisEnabled() === true) {
             $this->saveInCache($Customer->id, $Customer);

@@ -32,6 +32,15 @@ abstract class Base extends BaseService
 
         return $name;
     }
+    protected static function validateEmail(string $emailValue): string
+    {
+        $email = filter_var($emailValue, FILTER_SANITIZE_EMAIL);
+        if (! v::email()->validate($email)) {
+            throw new User('Invalid email', 400);
+        }
+
+        return $email;
+    }
 
 
 

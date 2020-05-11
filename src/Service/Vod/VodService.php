@@ -18,9 +18,9 @@ final class VodService extends Base
         return $this->getVodRepository()->getAll($userId);
     }
 
-    public function getbyCat($vod): array
+    public function getByCat($vod): array
     {
-        return $this->getVodRepository()->getbyCat($vod);
+        return $this->getVodRepository()->getByCat($vod);
     }
 
     public function getOne(int $VodId, int $userId)

@@ -15,7 +15,7 @@ final class CustomerRepository extends BaseRepository
 
     public function getCustomer(int $CustomerId): object
     {
-        $query = 'SELECT `id`, `name`, `email` FROM `Customers` WHERE `id` = :id';
+        $query = 'SELECT * FROM `customer_data` WHERE `id` = :id';
         $statement = $this->database->prepare($query);
         $statement->bindParam('id', $CustomerId);
         $statement->execute();
@@ -29,7 +29,7 @@ final class CustomerRepository extends BaseRepository
 
     public function checkCustomerByEmail(string $email): void
     {
-        $query = 'SELECT * FROM `Customers` WHERE `email` = :email';
+        $query = 'SELECT * FROM `customer_data` WHERE `email` = :email';
         $statement = $this->database->prepare($query);
         $statement->bindParam('email', $email);
         $statement->execute();
@@ -79,11 +79,15 @@ final class CustomerRepository extends BaseRepository
 
     public function create(object $Customer): object
     {
-        $query = 'INSERT INTO `Customers` (`name`, `email`, `password`) VALUES (:name, :email, :password)';
+        $query = "INSERT INTO `customer_data` (`company_id`,`group_id`,`firstname`,`lastname`,`email`,`address`,`city`,`country`,`zip_code`,`telephone`) 
+                  VALUES (1,1,:firstname,:lastname,:email,'ha noi','ha noi',' Vietnam','','1234567890')
+                  ";
         $statement = $this->database->prepare($query);
-        $statement->bindParam('name', $Customer->name);
+
+        $statement->bindParam('firstname', $Customer->firstname);
+        $statement->bindParam('lastname', $Customer->lastname);
         $statement->bindParam('email', $Customer->email);
-        $statement->bindParam('password', $Customer->password);
+        //  $statement->bindParam('password', $Customer->password);
         $statement->execute();
 
         return $this->getCustomer((int) $this->database->lastInsertId());

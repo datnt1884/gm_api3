@@ -6,7 +6,6 @@ $app->get('/', 'App\Controller\DefaultController:getHelp');
 $app->get('/status', 'App\Controller\DefaultController:getStatus');
 
 
-
 $app->post('/login', \App\Controller\Customer\Login::class);
 $app->post('/reg', \App\Controller\Customer\Create::class);
 $app->post('/auth', \App\Controller\Device\Auth::class);
@@ -33,7 +32,7 @@ $app->group('/api/v1', function () use ($app): void {
 
     /***Vod****/
     $app->group('/vod', function () use ($app): void {
-        $app->get('[/{category_id}[/{page}]]', \App\Controller\Vod\GetAll::class);
+        $app->get('[/{category_id}[/{page}]]', \App\Controller\Vod\GetBycat::class);
        // $app->get('/[{id}]', \App\Controller\Vod\GetOne::class);
         $app->get('/search/[{query}]', \App\Controller\Vod\Search::class);
         $app->post('', \App\Controller\Vod\Create::class);

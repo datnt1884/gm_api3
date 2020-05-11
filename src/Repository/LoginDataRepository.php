@@ -15,7 +15,7 @@ final class LoginDataRepository extends BaseRepository
 
     public function getLoginData(int $LoginDataId): object
     {
-        $query = 'SELECT `id`, `name`, `email` FROM `LoginDatas` WHERE `id` = :id';
+        $query = 'SELECT * FROM `login_data` WHERE `id` = :id';
         $statement = $this->database->prepare($query);
         $statement->bindParam('id', $LoginDataId);
         $statement->execute();
@@ -29,7 +29,7 @@ final class LoginDataRepository extends BaseRepository
 
     public function checkLoginDataByEmail(string $email): void
     {
-        $query = 'SELECT * FROM `LoginDatas` WHERE `email` = :email';
+        $query = 'SELECT * FROM `login_data` WHERE `email` = :email';
         $statement = $this->database->prepare($query);
         $statement->bindParam('email', $email);
         $statement->execute();
@@ -80,8 +80,8 @@ final class LoginDataRepository extends BaseRepository
     public function create(object $LoginData): object
     {
         $query = " INSERT INTO `login_data` (`company_id`,`username`,`mac_address`,`password`,`salt`,`customer_id`,`channel_stream_source_id`,`vod_stream_source`,`pin`,`show_adult`,`auto_timezone`,`timezone`,`player`,`activity_timeout`,`get_messages`,`get_ads`,`resetPasswordToken`,`resetPasswordExpires`,`vodlastchange`,`livetvlastchange`,`account_lock`,`beta_user`)
-                                    VALUES (1,:username,NULL,:password,'1uLcrD2FGEvgLlI5Zc/xQg==',:customer_id,1,1,'1234',false,false,-11,'default',10800,false,false,' ','0',1583727216363,1583727216363,false,false)
-                                    ";
+                  VALUES (1,:username,NULL,:password,'1uLcrD2FGEvgLlI5Zc/xQg==',:customer_id,1,1,'1234',false,false,-11,'default',10800,false,false,' ','0',1583727216363,1583727216363,false,false)
+                  ";
         $statement = $this->database->prepare($query);
         $statement->bindParam("username", $LoginData->username);
         $statement->bindParam("password", $LoginData->password);

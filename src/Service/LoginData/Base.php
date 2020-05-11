@@ -26,8 +26,8 @@ abstract class Base extends BaseService
 
     protected static function validateLoginDataName(string $name): string
     {
-        if (! v::alnum()->length(2, 100)->validate($name)) {
-            throw new LoginData('Invalid name.', 400);
+        if (! v::alnum(_)->length(2, 100)->validate($name)) {
+            throw new LoginData('Invalid ---name.', 400);
         }
 
         return $name;
