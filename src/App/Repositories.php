@@ -10,6 +10,7 @@ use App\Repository\LoginDataRepository;
 use App\Repository\CustomerRepository;
 use App\Repository\SerialRepository;
 use App\Repository\VodCatRepository;
+use App\Repository\SubscriRepository;
 
 use App\Repository\NoteRepository;
 use App\Repository\TaskRepository;
@@ -52,5 +53,8 @@ $container['serial_repository'] = static function (ContainerInterface $container
 };
 $container['vodCat_repository'] = static function (ContainerInterface $container): VodCatRepository {
     return new VodCatRepository($container->get('db'));
+};
+$container['subscri_repository'] = static function (ContainerInterface $container): SubscriRepository {
+    return new SubscriRepository($container->get('db'));
 };
 

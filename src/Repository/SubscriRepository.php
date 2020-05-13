@@ -39,11 +39,12 @@ final class SubscriRepository extends BaseRepository
 
     public function getAll(int $userId): array
     {
-        $query = 'SELECT * FROM `Subscris` WHERE `userId` = :userId ORDER BY `id`';
+        $query = " SELECT * FROM `subscription`  
+                   WHERE `package_id` = '1' AND `company_id` = '1' AND `login_id` = :userId 
+                   ORDER BY `id`";
         $statement = $this->getDb()->prepare($query);
         $statement->bindParam('userId', $userId);
         $statement->execute();
-
         return $statement->fetchAll();
     }
 

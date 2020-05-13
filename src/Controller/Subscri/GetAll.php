@@ -13,9 +13,9 @@ final class GetAll extends Base
     {
         $input = $request->getParsedBody();
         $userId = (int) $input['decoded']->sub;
-        $deviceid = $this->getSubcriService()->getDeviceid($userId);
+        $deviceid = $this->getSubscriService()->getDeviceid($userId);
 
-        $Subcris = $this->getSubcriService()->getAll((int) $deviceid[0]['login_data_id']);
+        $Subcris = $this->getSubscriService()->getAll((int) $deviceid[0]['login_data_id']);
 
         return $this->jsonResponse($response, 'success', $Subcris, 200);
     }

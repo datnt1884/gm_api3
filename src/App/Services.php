@@ -10,6 +10,8 @@ use App\Service\LoginData\LoginDataService;
 use App\Service\Serial\SerialService;
 use App\Service\Epg\EpgService;
 use App\Service\VodCat\VodCatService;
+use App\Service\Subscri\SubscriService;
+
 
 
 use App\Service\Note\NoteService;
@@ -53,4 +55,7 @@ $container['epg_service'] = static function (ContainerInterface $container): Epg
 };
 $container['vodCat_service'] = static function (ContainerInterface $container): VodCatService {
     return new VodCatService($container->get('vodCat_repository'), $container->get('redis_service'));
+};
+$container['subscri_service'] = static function (ContainerInterface $container): SubscriService {
+    return new SubscriService($container->get('subscri_repository'), $container->get('redis_service'));
 };

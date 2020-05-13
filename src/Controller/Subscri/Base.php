@@ -17,6 +17,6 @@ abstract class Base extends BaseController
 
     protected function getSubscriService(): SubscriService
     {
-        return $this->container->get('Subscri_service');
+        return $this->container->get('subscri_service');
     }
 }

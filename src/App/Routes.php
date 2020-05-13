@@ -63,6 +63,12 @@ $app->group('/api/v1', function () use ($app): void {
     $app->get('/getDateEpg', 'App\Controller\DefaultController:getDateEpg');
     $app->get('/getDateCatchup', 'App\Controller\DefaultController:getDateCatchup');
 
+    /**** GET SUBSCRIPTION ****/
+
+    $app->group('/subcriptions', function () use ($app) {
+        $app->get('', \App\Controller\Subscri\GetAll::class);
+
+    })->add(new App\Middleware\Auth());
 
 
     $app->group('/users', function () use ($app): void {
