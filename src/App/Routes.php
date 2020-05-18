@@ -67,6 +67,8 @@ $app->group('/api/v1', function () use ($app): void {
 
     $app->group('/subcriptions', function () use ($app) {
         $app->get('', \App\Controller\Subscri\GetAll::class);
+        $app->post('', \App\Controller\Subscri\Create::class);
+
 
     })->add(new App\Middleware\Auth());
 

@@ -11,6 +11,9 @@ use App\Repository\CustomerRepository;
 use App\Repository\SerialRepository;
 use App\Repository\VodCatRepository;
 use App\Repository\SubscriRepository;
+use App\Repository\ComboRepository;
+use App\Repository\ComboPackageRepository;
+
 
 use App\Repository\NoteRepository;
 use App\Repository\TaskRepository;
@@ -56,5 +59,11 @@ $container['vodCat_repository'] = static function (ContainerInterface $container
 };
 $container['subscri_repository'] = static function (ContainerInterface $container): SubscriRepository {
     return new SubscriRepository($container->get('db'));
+};
+$container['combo_repository'] = static function (ContainerInterface $container): ComboRepository {
+    return new ComboRepository($container->get('db'));
+};
+$container['comboPackage_repository'] = static function (ContainerInterface $container): ComboPackageRepository {
+    return new ComboPackageRepository($container->get('db'));
 };
 

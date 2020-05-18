@@ -66,40 +66,42 @@ final class SubscriRepository extends BaseRepository
     public function create(object $Subscri): object
     {
         $query = '
-            INSERT INTO `Subscris` (`name`, `description`, `status`, `userId`)
-            VALUES (:name, :description, :status, :userId)
+            INSERT INTO `subscription` (`company_id`, `login_id`, `package_id`, `customer_username`, `user_username`, `start_date`, `end_date`)
+            VALUES (:company_id, :login_id, :package_id, :customer_username, :user_username, :start_date, :end_date )
         ';
         $statement = $this->getDb()->prepare($query);
-        $statement->bindParam('name', $Subscri->name);
-        $statement->bindParam('description', $Subscri->description);
-        $statement->bindParam('status', $Subscri->status);
-        $statement->bindParam('userId', $Subscri->userId);
+        $statement->bindParam('company_id', $Subscri->company_id);
+        $statement->bindParam('login_id', $Subscri->login_id);
+        $statement->bindParam('package_id', $Subscri->package_id);
+        $statement->bindParam('customer_username', $Subscri->customer_username);
+        $statement->bindParam('user_username', $Subscri->user_username);
+        $statement->bindParam('start_date', $Subscri->start_date);
+        $statement->bindParam('end_date', $Subscri->end_date);
         $statement->execute();
-
-        return $this->checkAndGetSubscri((int) $this->database->lastInsertId(), (int) $Subscri->userId);
+        return $this->checkAndGetSubscri((int) $this->database->lastInsertId(), (int) $Subscri->login_id);
     }
 
     public function update(object $Subscri): object
     {
         $query = '
             UPDATE `Subscris`
-            SET `name` = :name, `description` = :description, `status` = :status
-            WHERE `id` = :id AND `userId` = :userId
+            SET `company_id` = :company_id,  `package_id` = :package_id, `en_date` =:en_date
+            WHERE `id` = :id AND `login_id` = :login_id
         ';
         $statement = $this->getDb()->prepare($query);
         $statement->bindParam('id', $Subscri->id);
-        $statement->bindParam('name', $Subscri->name);
-        $statement->bindParam('description', $Subscri->description);
-        $statement->bindParam('status', $Subscri->status);
-        $statement->bindParam('userId', $Subscri->userId);
+        $statement->bindParam('company_id', $Subscri->company_id);
+        $statement->bindParam('package_id', $Subscri->package_id);
+        $statement->bindParam('end_date', $Subscri->end_date);
+        $statement->bindParam('login_id', $Subscri->login_id);
         $statement->execute();
 
-        return $this->checkAndGetSubscri((int) $Subscri->id, (int) $Subscri->userId);
+        return $this->checkAndGetSubscri((int) $Subscri->id, (int) $Subscri->login_id);
     }
 
     public function delete(int $SubscriId, int $userId): string
     {
-        $query = 'DELETE FROM `Subscris` WHERE `id` = :id AND `userId` = :userId';
+        $query = 'DELETE FROM `Subscris` WHERE `id` = :id AND `login_id` = :login_id';
         $statement = $this->getDb()->prepare($query);
         $statement->bindParam('id', $SubscriId);
         $statement->bindParam('userId', $userId);

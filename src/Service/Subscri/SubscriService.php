@@ -41,17 +41,17 @@ final class SubscriService extends Base
     public function create(array $input)
     {
         $data = json_decode(json_encode($input), false);
-        if (! isset($data->name)) {
-            throw new Subscri('The field "name" is required.', 400);
-        }
-        self::validateSubscriName($data->name);
-        $data->description = $data->description ?? null;
-        $status = 0;
-        if (isset($data->status)) {
-            $status = self::validateSubscriStatus($data->status);
-        }
-        $data->status = $status;
-        $data->userId = $data->decoded->sub;
+        //if (! isset($data->username)) {
+          //  throw new Subscri('The field "name" is required.', 400);
+        //}
+        //self::validateSubscriName($data->username);
+        //$data->description = $data->description ?? null;
+      //  $status = 0;
+     //   if (isset($data->status)) {
+       //     $status = self::validateSubscriStatus($data->status);
+        //}
+        //$data->status = $status;
+        //$data->userId = $data->decoded->sub;
         $Subscri = $this->getSubscriRepository()->create($data);
         if (self::isRedisEnabled() === true) {
             $this->saveInCache($Subscri->id, $Subscri->userId, $Subscri);
@@ -64,19 +64,19 @@ final class SubscriService extends Base
     {
         $Subscri = $this->getSubscriFromDb($SubscriId, (int) $input['decoded']->sub);
         $data = json_decode(json_encode($input), false);
-        if (! isset($data->name) && ! isset($data->status)) {
-            throw new Subscri('Enter the data to update the Subscri.', 400);
-        }
-        if (isset($data->name)) {
-            $Subscri->name = self::validateSubscriName($data->name);
-        }
-        if (isset($data->description)) {
-            $Subscri->description = $data->description;
-        }
-        if (isset($data->status)) {
-            $Subscri->status = self::validateSubscriStatus($data->status);
-        }
-        $Subscri->userId = $data->decoded->sub;
+       // if (! isset($data->name) && ! isset($data->status)) {
+        //    throw new Subscri('Enter the data to update the Subscri.', 400);
+        //}
+        //if (isset($data->name)) {
+        //    $Subscri->name = self::validateSubscriName($data->name);
+       // }
+       // if (isset($data->description)) {
+        //    $Subscri->description = $data->description;
+        //}
+        //if (isset($data->status)) {
+         //   $Subscri->status = self::validateSubscriStatus($data->status);
+        //}
+      //  $Subscri->userId = $data->decoded->sub;
         $Subscris = $this->getSubscriRepository()->update($Subscri);
         if (self::isRedisEnabled() === true) {
             $this->saveInCache($Subscris->id, $Subscri->userId, $Subscris);
